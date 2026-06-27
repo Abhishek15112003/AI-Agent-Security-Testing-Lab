@@ -1,0 +1,3 @@
+ASI02-003 | Database Extraction | HIGH
+ASI06-001 | Trust Manipulation | MEDIUM
+ASI06-002 | Memory Persistence | HIGH

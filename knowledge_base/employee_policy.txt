@@ -1,0 +1,2 @@
+Employees may access reports
+only when authorized.

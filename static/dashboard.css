@@ -1,0 +1,382 @@
+/* ============================================
+   AI Agent Security Testing Lab
+   SOC Dashboard UI v2
+   ============================================
+   Changes overview:
+   • Inter (data-first typeface) in place of Segoe UI
+   • Semantic CSS variable system with glow tokens
+   • Layered panel backgrounds with gradient depth
+   • Luminous glow on hover in place of flat borders (signature element)
+   • Tightened type scale & spacing rhythm
+   • Reduced-motion support
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── Design Tokens ──────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  /* Backgrounds — layered from deep to surface */
+  --bg:            #080c12;
+  --bg-mid:        #0d1219;
+  --panel:         #111720;
+  --panel-raised:  #161d2b;
+
+  /* Borders — three levels of visibility */
+  --border-faint:  rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.11);
+  --border-active: rgba(255, 255, 255, 0.20);
+
+  /* Typography */
+  --text:          #d1d8e4;
+  --text-strong:   #f0f4ff;
+  --text-muted:    #7a8a9e;
+  --text-dim:      #4a5568;
+
+  /* Semantic accent palette */
+  --accent:           #10b981;
+  --accent-glow:      rgba(16, 185, 129, 0.18);
+  --accent-blue:      #4f8ef7;
+  --accent-blue-glow: rgba(79, 142, 247, 0.20);
+  --warning:          #f59e0b;
+  --warning-glow:     rgba(245, 158, 11, 0.18);
+  --danger:           #f05252;
+  --danger-glow:      rgba(240, 82, 82, 0.20);
+
+  /* Elevation */
+  --shadow-sm:     0 2px 8px   rgba(0, 0, 0, 0.30);
+  --shadow-md:     0 8px 24px  rgba(0, 0, 0, 0.40);
+  --shadow-lg:     0 16px 48px rgba(0, 0, 0, 0.55);
+
+  /* Radii */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-pill: 999px;
+
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ── Base ───────────────────────────────────────────────────────── */
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.06), transparent),
+    linear-gradient(160deg, #080c12 0%, #0c1320 100%);
+  background-attachment: fixed;
+  color: var(--text);
+
+  scrollbar-gutter: stable;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--border-active); }
+
+/* ── Shell / Layout wrapper ─────────────────────────────────────── */
+.shell {
+  width: min(1200px, calc(100% - 32px));
+  margin: auto;
+  padding: 48px 0 64px;
+}
+
+/* ── Hero section ───────────────────────────────────────────────── */
+.hero {
+  display: grid;
+  gap: 20px;
+  padding: 36px 40px;
+  border-radius: var(--radius-lg);
+
+  background:
+    linear-gradient(135deg, rgba(79, 142, 247, 0.04) 0%, transparent 60%),
+    var(--panel);
+
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Eyebrow tag ────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+
+  background: rgba(79, 142, 247, 0.12);
+  border: 1px solid rgba(79, 142, 247, 0.22);
+
+  color: #93c5fd;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+/* ── Headings ───────────────────────────────────────────────────── */
+h1 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(1.9rem, 4vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 6px;
+  max-width: 60ch;
+}
+
+/* ── Stat row ───────────────────────────────────────────────────── */
+.status-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+/* ── Stat card ──────────────────────────────────────────────────── */
+.stat {
+  background: var(--panel);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  padding: 20px 22px 18px;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat:hover {
+  border-color: var(--border-active);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(79, 142, 247, 0.12);
+}
+
+.stat-label {
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text-strong);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Severity badges ────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge.low {
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.badge.medium {
+  color: var(--warning);
+  background: var(--warning-glow);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.badge.high {
+  color: var(--danger);
+  background: var(--danger-glow);
+  border: 1px solid rgba(240, 82, 82, 0.25);
+}
+
+/* ── Main 12-column grid ────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* ── Panel ──────────────────────────────────────────────────────── */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.panel:hover {
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-md);
+}
+
+.panel-score    { grid-column: span 6; }
+.panel-findings { grid-column: span 6; }
+.panel-events   { grid-column: span 12; }
+
+.panel h2 {
+  margin: 0 0 20px;
+  color: var(--text-strong);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+/* ── List / Items ───────────────────────────────────────────────── */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  padding: 14px 16px;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.025);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: var(--border-subtle);
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* ── OWASP Coverage indicators ──────────────────────────────────── */
+.coverage-good { color: var(--accent);  font-weight: 700; }
+.coverage-bad  { color: var(--danger);  font-weight: 700; }
+
+/* ── Event severity labels ──────────────────────────────────────── */
+.high-event   { color: var(--danger);  font-weight: 700; }
+.medium-event { color: var(--warning); font-weight: 700; }
+.low-event    { color: var(--accent);  font-weight: 700; }
+
+.event-time {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  margin-top: 6px;
+}
+
+/* ── Download button ────────────────────────────────────────────── */
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+
+  background: linear-gradient(135deg, #4f8ef7, #3563d4);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 4px 14px rgba(53, 99, 212, 0.35);
+  margin-top: 10px;
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #5f9bff, #2d57c4);
+  box-shadow: 0 6px 20px rgba(53, 99, 212, 0.50);
+  transform: translateY(-1px);
+}
+
+.download-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(53, 99, 212, 0.30);
+}
+
+/* ── Accessibility: focus-visible outlines ──────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+}
+
+/* ── Reduced-motion: respect user OS preferences ────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Responsive: single-column below 900px ──────────────────────── */
+@media (max-width: 900px) {
+  .shell {
+    padding: 28px 0 48px;
+  }
+
+  .hero {
+    padding: 28px 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-score,
+  .panel-findings,
+  .panel-events {
+    grid-column: span 1;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+}
+
+/* ── Responsive: compact stat row on very small screens ─────────── */
+@media (max-width: 480px) {
+  .status-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panel {
+    padding: 20px 18px;
+  }
+}

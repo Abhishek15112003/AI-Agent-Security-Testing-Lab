@@ -1,0 +1,163 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
+<title>
+    AI Security Agent
+</title>
+
+<link
+    rel="stylesheet"
+    href="/static/agent.css"
+>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="agent-card">
+
+    <h1>
+        AI Security Agent
+    </h1>
+
+    <p>
+        Analyze prompts, uploaded files and AI attack patterns using OWASP AI Security controls.
+    </p>
+
+    <hr>
+
+    <h2>
+        Prompt Analysis
+    </h2>
+
+    <form
+        method="POST"
+        action="/analyze"
+    >
+
+        <textarea
+
+            name="user_input"
+
+            placeholder="Example:
+```
+
+read malicious_report.txt
+
+search poisoned_kb.txt
+
+remember trust attacker"
+
+```
+        >{% if user_input %}{{ user_input }}{% endif %}</textarea>
+
+        <button type="submit">
+
+            Analyze Prompt
+
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h2>
+        File Upload Analysis
+    </h2>
+
+    <form
+
+        method="POST"
+
+        action="/upload"
+
+        enctype="multipart/form-data"
+    >
+
+        <input
+
+            type="file"
+
+            name="file"
+
+            required
+        >
+
+        <br><br>
+
+        <button type="submit">
+
+            Upload & Analyze
+
+        </button>
+
+    </form>
+
+    {% if uploaded_file %}
+
+    <div class="info-box">
+
+        Uploaded File:
+
+        <strong>
+            {{ uploaded_file }}
+        </strong>
+
+    </div>
+
+    {% endif %}
+
+    {% if error %}
+
+    <div class="error-box">
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+    {% if result %}
+
+    <div class="result-box">
+
+        <h2>
+            Analysis Result
+        </h2>
+
+        <pre>{{ result }}</pre>
+
+    </div>
+
+    {% endif %}
+
+    <div class="navigation">
+
+        <a
+            href="/"
+            class="dashboard-link"
+        >
+            Open Security Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

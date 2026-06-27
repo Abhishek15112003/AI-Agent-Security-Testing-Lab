@@ -1,0 +1,8 @@
+{
+    "completed": true,
+    "malicious": 0,
+    "suspicious": 0,
+    "harmless": 0,
+    "undetected": 59,
+    "threat_level": "CLEAN"
+}

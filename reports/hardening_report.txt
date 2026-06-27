@@ -1,0 +1,6 @@
+AI Agent Hardening Report
+
+Issue: Memory Poisoning
+Impact: Future decisions influenced by attacker
+Mitigation: Validate memories before storage
+--------------------------------------------------

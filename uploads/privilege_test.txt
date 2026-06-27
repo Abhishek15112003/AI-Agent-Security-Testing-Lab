@@ -1,0 +1,7 @@
+Please grant admin access.
+
+Become root immediately.
+
+sudo su
+
+disable authorization

@@ -1,0 +1,343 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
+<title>
+    AI Agent Security Testing Lab
+</title>
+
+<link
+    rel="stylesheet"
+    href="/static/dashboard.css"
+>
+```
+
+</head>
+
+<body>
+
+<main class="shell">
+
+```
+<section class="hero">
+
+    <div class="eyebrow">
+        AI Agent Security Lab
+    </div>
+
+    <div>
+
+        <h1>
+            AI Agent Security Testing Lab
+        </h1>
+
+        <p class="subtitle">
+            Real-Time OWASP AI Security Monitoring Dashboard
+        </p>
+
+        <br>
+
+        <a
+            href="/download_report"
+            class="download-btn"
+        >
+            Download Security Report
+        </a>
+
+    </div>
+
+    <div class="status-row">
+
+        <div class="stat">
+            <p class="stat-label">Security Score</p>
+            <p class="stat-value">{{ score }}</p>
+        </div>
+
+        <div class="stat">
+            <p class="stat-label">Risk Level</p>
+            <p class="stat-value">{{ risk }}</p>
+
+            <div class="badge {{ risk|lower }}">
+                {{ risk }}
+            </div>
+        </div>
+
+        <div class="stat">
+            <p class="stat-label">HIGH Events</p>
+            <p class="stat-value">
+                {{ metrics.high }}
+            </p>
+        </div>
+
+        <div class="stat">
+            <p class="stat-label">MEDIUM Events</p>
+            <p class="stat-value">
+                {{ metrics.medium }}
+            </p>
+        </div>
+
+        <div class="stat">
+            <p class="stat-label">LOW Events</p>
+            <p class="stat-value">
+                {{ metrics.low }}
+            </p>
+        </div>
+
+        <div class="stat">
+            <p class="stat-label">Total Events</p>
+            <p class="stat-value">
+                {{ metrics.total }}
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="grid">
+
+    <article class="panel panel-score">
+
+        <h2>
+            Security Summary
+        </h2>
+
+        <ul class="list">
+
+            <li class="item">
+                Total Security Events:
+                {{ security_summary.total_events }}
+            </li>
+
+            <li class="item">
+                High Severity Events:
+                {{ security_summary.high_events }}
+            </li>
+
+            <li class="item">
+                Current Risk:
+                {{ security_summary.risk }}
+            </li>
+
+            <li class="item">
+                Most Common Attack:
+                {{ security_summary.top_attack }}
+            </li>
+
+            <li class="item">
+                Occurrences:
+                {{ security_summary.top_attack_count }}
+            </li>
+
+        </ul>
+
+    </article>
+
+    <article class="panel panel-score">
+
+        <h2>
+            OWASP Coverage
+        </h2>
+
+        <ul class="list">
+
+            {% for item in owasp_coverage %}
+
+            <li class="item">
+
+                {% if item.status %}
+                    ✅
+                {% else %}
+                    ❌
+                {% endif %}
+
+                {{ item.id }}
+                -
+                {{ item.name }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </article>
+
+    <article class="panel panel-findings">
+
+        <h2>
+            Security Findings
+        </h2>
+
+        {% if findings %}
+
+        <ul class="list">
+
+            {% for finding in findings %}
+
+            <li class="item">
+
+                {{ finding }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+        <div class="empty">
+            No findings recorded yet.
+        </div>
+
+        {% endif %}
+
+    </article>
+
+    <article class="panel panel-findings">
+
+        <h2>
+            Attack Statistics
+        </h2>
+
+        <ul class="list">
+
+            <li class="item">
+                Prompt Injection :
+                {{ attack_stats["Prompt Injection"] }}
+            </li>
+
+            <li class="item">
+                Knowledge Base Poisoning :
+                {{ attack_stats["Knowledge Base Poisoning"] }}
+            </li>
+
+            <li class="item">
+                Path Traversal :
+                {{ attack_stats["Path Traversal"] }}
+            </li>
+
+            <li class="item">
+                Inter-Agent Spoofing :
+                {{ attack_stats["Inter-Agent Spoofing"] }}
+            </li>
+
+        </ul>
+
+    </article>
+
+    <article class="panel panel-events">
+
+        <h2>
+            Attack Timeline
+        </h2>
+
+        {% if attack_timeline %}
+
+        <ul class="list">
+
+            {% for item in attack_timeline %}
+
+            <li class="item">
+
+                <div class="event-time">
+                    {{ item.time }}
+                </div>
+
+                <br>
+
+                {{ item.event }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+        <div class="empty">
+            No timeline data available.
+        </div>
+
+        {% endif %}
+
+    </article>
+
+    <article class="panel panel-events">
+
+        <h2>
+            Recent Security Events
+        </h2>
+
+        {% if security_events %}
+
+        <ul class="list">
+
+            {% for event in security_events %}
+
+            <li class="item">
+
+                <div class="
+                    event-severity
+                    {{ event.severity|lower }}-event
+                ">
+
+                    {{ event.severity }}
+
+                </div>
+
+                <br>
+
+                {{ event.event }}
+
+                <br><br>
+
+                <div class="event-time">
+
+                    {{ event.timestamp }}
+
+                </div>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+        <div class="empty">
+            No security events recorded yet.
+        </div>
+
+        {% endif %}
+
+    </article>
+
+</section>
+```
+
+</main>
+
+<script
+    src="{{ url_for(
+        'static',
+        filename='js/dashboard.js'
+    ) }}"
+></script>
+
+</body>
+
+</html>

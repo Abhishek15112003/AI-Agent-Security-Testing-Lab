@@ -1,0 +1,190 @@
+/* ============================================
+   AI Security Agent Platform
+   Professional UI v2
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  --bg:           #080c12;
+  --panel:        #111720;
+  --panel-raised: #161d2b;
+
+  --text:         #d1d8e4;
+  --text-strong:  #f0f4ff;
+  --text-muted:   #7a8a9e;
+
+  --accent:       #4f8ef7;
+  --accent-glow:  rgba(79, 142, 247, 0.25);
+
+  --success:      #10b981;
+  --warning:      #f59e0b;
+  --danger:       #ef4444;
+
+  --border:       rgba(255, 255, 255, 0.08);
+  --shadow:       0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(160deg, #080c12, #0c1320);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+}
+
+.container {
+  width: min(1000px, 100%);
+}
+
+.agent-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+
+h1 {
+  margin-top: 0;
+  color: var(--text-strong);
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--text-strong);
+}
+
+p {
+  color: var(--text-muted);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 30px 0;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-strong);
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+button {
+  margin-top: 18px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4f8ef7, #3563d4);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(79, 142, 247, 0.4);
+}
+
+.result-box {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.result-box h2 {
+  margin-top: 0;
+}
+
+.result-box pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--text-strong);
+}
+
+.error-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+.info-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.navigation {
+  margin-top: 30px;
+}
+
+.dashboard-link {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  background: #3b82f6;
+  font-weight: 700;
+}
+
+.dashboard-link:hover {
+  background: #2563eb;
+}
+
+@media (max-width: 700px) {
+  .agent-card {
+    padding: 24px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .dashboard-link {
+    width: 100%;
+    text-align: center;
+  }
+}
